@@ -39,10 +39,10 @@ version = "1.2.2.1"
 -- Version is used for the updater program i've made here: http://pastebin.com/jSWFQsA1
  
 mProt = "masterRC"
-rednet.open("right")
+rednet.open("top")
 -- mProt is the protocol the computer will be using. You can also configure what side the wireless modem is on
  
-pluginFolder = "mControlPlugins"
+pluginFolder = "_Main"
 -- Where the plugins for the program are read from. Plugins are easily installable functions for the control program
  
 myFunction = "Default mControl program!"
@@ -52,14 +52,15 @@ myFunction = "Default mControl program!"
  
 functions = {
  
-status = {upload = 1, download = 1, filelist = 1, redstone = 1},
+status = {upload = 1, download = 1, filelist = 1, redstone = 1, kelp_farm = 1},
 -- Easily configure which programs you want running and which ones you don't by simply setting 1 for those you want running and 0 for those you don't want running.
  
 helpTable = {
   upload = "upload a file to connected computer",
   download = "download a file from connected computer",
   filelist = "list files on connected computer",
-  redstone = "control sides of connected computer to emit redstone on"
+  redstone = "control sides of connected computer to emit redstone on",
+  kelp_farm= "Enable/Disable the Kelp farm"
 },
 -- Default help messages for each program
  
@@ -144,7 +145,16 @@ redstone = function(item)
     rednet.send(connectID, 'Invalid side. Available sides are: top, bottom, back, front, left, right', mProt)
   end
   -- Error messages to catch every combination
-end
+end,
+kelp_farm= function(item) 
+	if item[1] == "on" then
+		redstone.setOutput("bottom", false)
+		rednet.send(connectID, "Kelp farm is now " .. item[1], mProt)
+	elseif item[1] == "off" then
+		redstone.setOutput("bottom", true)
+		rednet.send(connectID, "Kelp farm is now " .. item[1], mProt)
+	end
+ end
 }
 }
  
