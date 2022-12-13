@@ -86,12 +86,12 @@ upload = function (item)
   end
   -- Handles the upload function
 end,
- run = function(item)
+run = function(item)
 	response = shell.run(item[1])
 	if response then
-		rednet.send(connectID, "Success: ".. response, mProt)
+		rednet.send(connectID, "Success: ", mProt)
 	else
-		rednet.send(connectID, "Error: "..response, mProt)
+		rednet.send(connectID, "Error: ", mProt)
 	end
  end,
 
