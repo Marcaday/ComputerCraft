@@ -42,10 +42,10 @@ mProt = "masterRC"
 rednet.open("top")
 -- mProt is the protocol the computer will be using. You can also configure what side the wireless modem is on
  
-pluginFolder = "_Main"
+pluginFolder = "Plugins"
 -- Where the plugins for the program are read from. Plugins are easily installable functions for the control program
  
-myFunction = "Default mControl program!"
+myFunction = "ToBeRenamed"
 -- Called when the remote computer lists available computers it can connect with
  
 -- ======================= Default function declaring below =======================
