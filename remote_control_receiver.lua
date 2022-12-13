@@ -52,7 +52,7 @@ myFunction = "ToBeRenamed"
  
 functions = {
  
-status = {upload = 1, download = 1, filelist = 1, redstone = 1, kelp_farm = 1, run = 1},
+status = {upload = 1, download = 1, filelist = 1, redstone = 1, kelp_farm = 1},
 -- Easily configure which programs you want running and which ones you don't by simply setting 1 for those you want running and 0 for those you don't want running.
  
 helpTable = {
@@ -60,7 +60,6 @@ helpTable = {
   download = "download a file from connected computer",
   filelist = "list files on connected computer",
   redstone = "control sides of connected computer to emit redstone on",
-  run = "run a command on the computer",
   kelp_farm= "Enable/Disable the Kelp farm"
 },
 -- Default help messages for each program
@@ -86,15 +85,6 @@ upload = function (item)
   end
   -- Handles the upload function
 end,
-run = function(item)
-	response = shell.run(item[1])
-	if response then
-		rednet.send(connectID, "Success: ", mProt)
-	else
-		rednet.send(connectID, "Error: ", mProt)
-	end
- end,
-
 download = function (item)
   if fs.exists(item[1]) == true and fs.isDir(item[1]) == false then
  
