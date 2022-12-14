@@ -52,7 +52,7 @@ myFunction = "ToBeRenamed"
  
 functions = {
  
-status = {upload = 1, download = 1, filelist = 1, redstone = 1, kelp_farm = 1},
+status = {upload = 1, download = 1, filelist = 1, redstone = 1, kelp_farm = 1, door = 1},
 -- Easily configure which programs you want running and which ones you don't by simply setting 1 for those you want running and 0 for those you don't want running.
  
 helpTable = {
@@ -60,7 +60,8 @@ helpTable = {
   download = "download a file from connected computer",
   filelist = "list files on connected computer",
   redstone = "control sides of connected computer to emit redstone on",
-  kelp_farm= "Enable/Disable the Kelp farm"
+  kelp_farm= "Enable/Disable the Kelp farm",
+  door = "open or close the door"
 },
 -- Default help messages for each program
  
@@ -152,6 +153,19 @@ kelp_farm= function(item)
 	elseif item[1] == "off" then
 		redstone.setOutput("bottom", true)
 		rednet.send(connectID, "Kelp farm is now " .. item[1], mProt)
+	else
+		rednet.send(connectID, "Invalid Syntax - use: door [open/close]", mProt)
+	end
+ end,
+door= function(item) 
+	if item[1] == "close" then
+		redstone.setOutput("top", false)
+		rednet.send(connectID, "Closing the door... ", mProt)
+	elseif item[1] == "open" then
+		redstone.setOutput("top", true)
+		rednet.send(connectID, "Opening the door... " .. item[1], mProt)
+	else
+		rednet.send(connectID, "Invalid Syntax - use: door [open/close]", mProt)
 	end
  end
 }
