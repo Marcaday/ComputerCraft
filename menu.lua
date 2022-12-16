@@ -1,8 +1,7 @@
 native = term.current()
 monitor = peripheral.find("monitor")
-
+monitor.setTextScale(0.5)
 term.redirect(monitor)
-
 width,height = term.getSize()
 
 function drawMenu()
@@ -13,3 +12,4 @@ function drawMenu()
 	term.setCursorPos(1,1)
 end
 
+drawMenu()
