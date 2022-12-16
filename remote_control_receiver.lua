@@ -159,10 +159,10 @@ kelp_farm= function(item)
  end,
 door= function(item) 
 	if item[1] == "close" then
-		redstone.setOutput("top", false)
+		redstone.setOutput("top", true)
 		rednet.send(connectID, "Closing the door... ", mProt)
 	elseif item[1] == "open" then
-		redstone.setOutput("top", true)
+		redstone.setOutput("top", false)
 		rednet.send(connectID, "Opening the door... " .. item[1], mProt)
 	else
 		rednet.send(connectID, "Invalid Syntax - use: door [open/close]", mProt)
