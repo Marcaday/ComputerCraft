@@ -6,7 +6,7 @@ term.redirect(monitor)
 width,height = term.getSize()
 
 function drawMenu()
-	native.write("width: "..width.tostring().." height: "..height.tostring())
+	native.write("width: "..tostring(width).." height: "..tostring(height))
 	term.setBackgroundColor(colors.gray)
 	term.setTextColor(colors.white)
 	term.clear()
