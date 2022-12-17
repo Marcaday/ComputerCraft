@@ -28,10 +28,10 @@ function RemoteReceiver(identity)
 		lmessage =  split(message, " ")
 		command = lmessage[1]
 		args = table.remove(lmessage, 1)
-		for sender in lSenders_control do
-			if senderID == sender then
-				for lMessage in lSupportedMessages do
-					if command[1] == lMessage then 
+		for i=0, #lSenders_control do
+			if senderID == lSenders_control[i] then
+				for j=0, #lSupportedMessages do
+					if command[1] == lSupportedMessages[j] then 
 						if command[1] == "identity" then
 							rednet.send(senderID, identity, lProtocol)
 							rednet.broadcast(lId.."-Sending Identity: "..identity, lLogP)	
