@@ -31,8 +31,8 @@ function RemoteReceiver(identity)
 		for i=0, #lSenders_control do
 			if senderID == lSenders_control[i] then
 				for j=0, #lSupportedMessages do
-					if command[1] == lSupportedMessages[j] then 
-						if command[1] == "identity" then
+					if command == lSupportedMessages[j] then 
+						if command == "identity" then
 							rednet.send(senderID, identity, lProtocol)
 							rednet.broadcast(lId.."-Sending Identity: "..identity, lLogP)	
 						else
