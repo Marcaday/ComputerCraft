@@ -41,6 +41,17 @@ while true do
         term.write("Exiting "..tostring(lConnectId))
 		term.setCursorPos(x,y+2)
 		y = y+2
+	elseif input == "logs" and lConnectId == "Unset" then
+		while true do 
+			local event, key = os.pullEvent("key")
+			senderID, message = rednet.receive(lLogP)
+			term.write(message)
+			term.setCursorPos(x,y+2)
+			y = y+2
+			if key == "q" then
+				break
+			end
+		end
     else    
 		rednet.broadcast(lId.." - Message to "..tostring(lConnectId)..": "..input, lLogP)
 		rednet.send(lConnectId, input, lProtocol)
