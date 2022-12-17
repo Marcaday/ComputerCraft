@@ -36,18 +36,14 @@ function RemoteReceiver(identity)
 							rednet.broadcast(lId.."-Sending Identity: "..identity, lLogP)   
                             rednet.send(senderID, identity, lProtocol)
                         else
-							rednet.broadcast(senderID.."-Asking to run :"..message.." on -"..lId, lLogP)
+							rednet.broadcast(senderID.."-Asking to run: "..message.." on -"..lId, lLogP)
                             multishell.launch({}, command..".lua", args, senderID)
                         end
                     else
                         rednet.send(senderID, lId.." -Error: Unknown message from "..tostring(senderID), lErrorP)
 						rednet.broadcast(lId.."-Error: Unknown message from "..tostring(senderID), lLogP)
-
                     end
                 end
-			else
-				rednet.broadcast(lId.."-Error: "..tostring(senderID).." doesnt have permission", lLogP)
-				rednet.broadcast(lId.."-Error: "..tostring(senderID).." doesnt have permission", lErrorP)
             end
         end
 end
