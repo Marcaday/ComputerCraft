@@ -1,5 +1,5 @@
 local lId = os.getComputerID()
-rednet.open("bottom")
+rednet.open("back")
 local lProtocol = "CCMP"
 local lLogP = "MLP"
 local connected_ids = {rednet.lookup(lProtocol)}
