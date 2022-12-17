@@ -20,7 +20,7 @@ function door(arg, senderID)
 	else
 		rednet.send(senderID, lId.."- Error: Unknown command for Maintenance doors", lErrorP)
 		rednet.broadcast(lId.."- Error: Unknown command for Maintenance doors", lLogP)
-		print("Error: Unknown command")
+		rednet.broadcast(lId.."- Error: Unknown command for Maintenance doors", lErrorP)
 	end
 
 end
