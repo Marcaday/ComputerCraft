@@ -11,10 +11,12 @@ elseif	params[1] == "remote_control_receiver" then
 else if params[1] == "installer" then
 	shell.run("rm installer.lua")
 	shell.run("wget https://github.com/Marcaday/ComputerCraft/raw/main/installer.lua installer.lua")
-else if params[1] == "plugin" and params[2] == "main_redstone_control" then
-	shell.run("rm mControlPlugins/main_redstone_control.lua")
-	shell.run("wget https://github.com/Marcaday/ComputerCraft/raw/main/plugins_main_redstone_control.lua mControlPlugins/main_redstone_control.lua")
-
+else if params[1] == "kelp_farm" then
+	shell.run("rm kelp_farm.lua")
+	shell.run("wget https://github.com/Marcaday/ComputerCraft/raw/main/kelp_farm.lua kelp_farm.lua")
+else if params[1] == "kelp_farm" then
+	shell.run("rm kelp_farm.lua")
+	shell.run("wget https://github.com/Marcaday/ComputerCraft/raw/main/kelp_farm.lua door_controllua")
 end
 end
 end
