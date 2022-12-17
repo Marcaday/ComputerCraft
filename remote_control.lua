@@ -41,7 +41,7 @@ while true do
 		term.setCursorPos(x,y+2)
 		y = y+2
     else    
-		rednet.broadcast(lId.."-Message to"..tostring(lConnectId)..": "..input, lLogP)
+		rednet.broadcast(lId.."-Message to "..tostring(lConnectId)..": "..input, lLogP)
 		rednet.send(lConnectId, input, lProtocol)
     end
     end
