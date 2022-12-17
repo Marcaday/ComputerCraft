@@ -23,7 +23,7 @@ while true do
     if input == "ls" and lConnectId == "Unset" then
     local connected_ids = {rednet.lookup(lProtocol)}
     for i=1, #connected_ids do
-		rednet.broadcast(lId.."- Asking identity to "..connected_ids[1], lLogP)
+		rednet.broadcast(lId.." - Asking identity to "..connected_ids[1], lLogP)
         rednet.send(connected_ids[i], "identity", lProtocol)
         senderID, message = rednet.receive(lProtocol)
         term.write(senderID.."-"..message)
