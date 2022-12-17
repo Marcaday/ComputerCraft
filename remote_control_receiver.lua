@@ -47,13 +47,13 @@ function RemoteReceiver(identity)
                 end
 				if lcommand_token == 0 then
 					rednet.send(senderID, lId.." - Error: Unknown message from "..tostring(senderID), lErrorP)
-					rednet.broadcast(lId.."- Error: Unknown message from "..tostring(senderID), lLogP)
+					rednet.broadcast(lId.." - Error: Unknown message from "..tostring(senderID), lLogP)
 				end
 				end
             end
 			if lsender_token == 0 then
-				rednet.send(senderID, lId.."-Error:"..tostring(senderID).." Does not have permissions to talk", lErrorP)
-				rednet.broadcast(lId.."-Error:"..tostring(senderID).." Does not have permissions to talk", lLogP)
+				rednet.send(senderID, lId.." - Error:"..tostring(senderID).." Does not have permissions to talk", lErrorP)
+				rednet.broadcast(lId.." - Error:"..tostring(senderID).." Does not have permissions to talk", lLogP)
 			end
         end
 end
