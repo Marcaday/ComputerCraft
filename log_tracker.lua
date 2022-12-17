@@ -1,8 +1,15 @@
 local lId = os.getComputerID()
-rednet.open("back")
+native = term.current()
+monitor = peripheral.find("monitor")
+if monitor then
+	term.redirect(monitor)
+end
+rednet.open("bottom")
+local identity = "RemoteController"
 local lLogP = "MLP"
-
+rednet.host(lLogP, identity)
 while true do 
 	senderID, message = rednet.receive(lLogP)
-	print(senderID.."-"..message)
+	term.write(senderID.."-"..message)
+	native.write(senderID.."-"..message)
 end

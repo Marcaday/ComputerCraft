@@ -28,9 +28,9 @@ function RemoteReceiver(identity)
 		lmessage =  split(message, " ")
 		command = lmessage[1]
 		args = table.remove(lmessage, 1)
-		for i=0, #lSenders_control do
-			if senderID == lSenders_control[i] then
-				for j=0, #lSupportedMessages do
+		for i=1, #lSenders_control do
+			if tostring(senderID) == lSenders_control[i] then
+				for j=1, #lSupportedMessages do
 					if command == lSupportedMessages[j] then 
 						if command == "identity" then
 							rednet.send(senderID, identity, lProtocol)
