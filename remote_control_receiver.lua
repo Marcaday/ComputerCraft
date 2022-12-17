@@ -40,7 +40,7 @@ function RemoteReceiver(identity)
 							rednet.broadcast(lId.."-Sending Identity: "..identity, lLogP)   
                             rednet.send(senderID, identity, lProtocol)
                         else
-							rednet.broadcast(senderID.."-Asking to run: "..message.." on -"..lId, lLogP)
+							rednet.broadcast(senderID.."-Asking to run: "..message.." on "..lId, lLogP)
                             multishell.launch({}, command..".lua", args, senderID)
                         end
                     end
