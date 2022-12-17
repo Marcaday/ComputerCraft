@@ -37,17 +37,17 @@ function RemoteReceiver(identity)
                     if command == lSupportedMessages[j] then
 						lcommand_token = 1
                         if command == "identity" then
-							rednet.broadcast(lId.."-Sending Identity: "..identity, lLogP)   
+							rednet.broadcast(lId.." - Sending Identity: "..identity, lLogP)   
                             rednet.send(senderID, identity, lProtocol)
                         else
-							rednet.broadcast(senderID.."-Asking to run: "..message.." on "..lId, lLogP)
+							rednet.broadcast(senderID.." - Asking to run: "..message.." on "..lId, lLogP)
                             multishell.launch({}, command..".lua", args, senderID)
                         end
                     end
                 end
 				if lcommand_token == 0 then
-					rednet.send(senderID, lId.." -Error: Unknown message from "..tostring(senderID), lErrorP)
-					rednet.broadcast(lId.."-Error: Unknown message from "..tostring(senderID), lLogP)
+					rednet.send(senderID, lId.." - Error: Unknown message from "..tostring(senderID), lErrorP)
+					rednet.broadcast(lId.."- Error: Unknown message from "..tostring(senderID), lLogP)
 				end
 				end
             end
