@@ -16,11 +16,12 @@ local function split(inputstr, sep)
 end
 
 while true do
-	local connected_ids = {rednet.lookup(lProtocol)}
+	lConnectId == -1
 	input = read()
 	tInput = split(input, " ")
 	if input == "ls" and lConnectId == -1 then
 		for i=1, #connected_ids do
+			local connected_ids = {rednet.lookup(lProtocol)}
 			rednet.send(connected_ids[i], "identity", lProtocol)
 			rednet.broadcast(lId.."- Asking identity to "..connected_ids[1], lLogP)
 			senderID, message = rednet.receive(lProtocol)
