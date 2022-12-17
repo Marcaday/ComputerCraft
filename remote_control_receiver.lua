@@ -10,6 +10,7 @@ local function split(inputstr, sep)
 	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
 		table.insert(t, str)
 	end
+	return (t)
 end
 
 function RemoteReceiver(identity)
@@ -18,18 +19,15 @@ function RemoteReceiver(identity)
 	local lErrorP = "MerrorP"
 	local lLogP = "MLP"
 	local lSupportedMessages = {"identity", "kelp_farm", "door"}
-	local lSenders_control = {"id1", "id"}
-	rednet.host(lProtocol)
-	rednet.host(lErrorP)
-	rednet.host(lLogP)
+	local lSenders_control = {"5", "id"}
+	rednet.host(lProtocol, identity)
+	rednet.host(lErrorP, identity)
+	rednet.host(lLogP, identity)
 	while true do
-	
-		rednet.broadcast(lId.." is Up", lProtocol)
-		rednet.broadcast(lId.." is Up", lLogP)
 		senderID, message = rednet.receive(lProtocol)
 		lmessage =  split(message, " ")
 		command = lmessage[1]
-		args = table.remove(message, 1)
+		args = table.remove(lmessage, 1)
 		for sender in lSenders_control do
 			if senderID == sender then
 				for lMessage in lSupportedMessages do
@@ -49,3 +47,5 @@ function RemoteReceiver(identity)
 		end
 end
 end
+
+RemoteReceiver(identity)
