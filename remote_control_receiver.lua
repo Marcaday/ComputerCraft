@@ -22,6 +22,7 @@ function RemoteReceiver(identity)
 	while true do
 	
 		rednet.broadcast(lId.." is Up", lProtocol)
+		rednet.broadcast(lId.." is Up", lLogP)
 		senderID, message = rednet.receive(lProtocol)
 		lmessage =  split(message, " ")
 		command = lmessage[1]

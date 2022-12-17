@@ -3,6 +3,7 @@ rednet.open("back")
 local lProtocol = "CCMP"
 local lLogP = "MLP"
 local connected_ids = {rednet.lookup(lProtocol)}
+print(connected_ids)
 
 for i=1, #connected_ids do
 	rednet.send(connected_ids[i], "identity", lProtocol)
