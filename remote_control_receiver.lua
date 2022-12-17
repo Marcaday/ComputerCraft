@@ -19,6 +19,9 @@ function RemoteReceiver(identity)
 	local lLogP = "MLP"
 	local lSupportedMessages = {"identity", "kelp_farm", "door"}
 	local lSenders_control = {"id1", "id"}
+	rednet.host(lProtocol)
+	rednet.host(lErrorP)
+	rednet.host(lLogP)
 	while true do
 	
 		rednet.broadcast(lId.." is Up", lProtocol)
