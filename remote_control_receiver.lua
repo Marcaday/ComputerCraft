@@ -18,7 +18,7 @@ function RemoteReceiver(identity)
     local lProtocol = "CCMP"
     local lErrorP = "MerrorP"
     local lLogP = "MLP"
-    local lSupportedMessages = {"identity", "kelp_farm", "door"}
+    local lSupportedMessages = {"identity", "reboot", "kelp_farm", "door"}
     local lSenders_control = {"5", "id"}
     rednet.host(lProtocol, identity)
     rednet.host(lErrorP, identity)

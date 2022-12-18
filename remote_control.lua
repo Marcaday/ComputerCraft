@@ -21,23 +21,33 @@ while true do
     input = read()
     tInput = split(input, " ")
     if input == "ls" and lConnectId == "Unset" then
-    local connected_ids = {rednet.lookup(lProtocol)}
-    for i=1, #connected_ids do
-		rednet.broadcast(lId.." - Asking identity to "..connected_ids[1], lLogP)
-        rednet.send(connected_ids[i], "identity", lProtocol)
-        senderID, message = rednet.receive(lProtocol)
-        term.write(senderID.."-"..message)
-		term.setCursorPos(x,y+2)
-		y = y+2
-    end
+    	local connected_ids = {rednet.lookup(lProtocol)}
+    	for i=1, #connected_ids do
+			rednet.broadcast(lId.." - Asking identity to "..connected_ids[i], lLogP)
+        	rednet.send(connected_ids[i], "identity", lProtocol)
+        	senderID, message = rednet.receive(lProtocol)
+        	term.write(senderID.."-"..message)
+			term.setCursorPos(x,y+2)
+			y = y+2
+    	end
 	-- last modif was to set lConnectedID from -1 to "unset"
     elseif tInput[1] == "connect"  then
         lConnectId = tonumber(tInput[2])
-        term.write("connect to "..tostring(lConnectId))
+		lCorrectTokenId = false
+		for i=1, #connected_ids do
+			if lConnectId == connected_ids[i] then
+				lCorrectTokenId = true
+				term.write("connect to "..tostring(lConnectId))
+			end
+		end
+		if lCorrectTokenId == false then
+			term.write("Unvalid Host : "..tostring(lConnectId))
+			lConnectId = "Unset"
+		end
 		term.setCursorPos(x,y+2)
 		y = y+2
     elseif  input == "exit" and lConnectId ~= "Unset" then
-        lConnectId = -1
+        lConnectId = "Unset"
         term.write("Exiting "..tostring(lConnectId))
 		term.setCursorPos(x,y+2)
 		y = y+2
@@ -52,6 +62,8 @@ while true do
 				break
 			end
 		end
+		term.setCursorPos(x,y+2)
+		y = y+2
     else    
 		rednet.broadcast(lId.." - Message to "..tostring(lConnectId)..": "..input, lLogP)
 		rednet.send(lConnectId, input, lProtocol)
