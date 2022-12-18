@@ -21,8 +21,9 @@ end
 while true do
     input = read()
     tInput = split(input, " ")
+	local connected_ids = {}
     if input == "ls" and lConnectId == "Unset" then
-    	local connected_ids = {rednet.lookup(lProtocol)}
+    	connected_ids = {rednet.lookup(lProtocol)}
     	for i=1, #connected_ids do
 			rednet.broadcast(lId.." - Asking identity to "..connected_ids[i], lLogP)
         	rednet.send(connected_ids[i], "identity", lProtocol)
@@ -31,7 +32,6 @@ while true do
 			term.setCursorPos(x,y+2)
 			y = y+2
     	end
-	-- last modif was to set lConnectedID from -1 to "unset"
     elseif tInput[1] == "connect"  then
         lConnectId = tonumber(tInput[2])
 		lCorrectTokenId = false
