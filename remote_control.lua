@@ -5,7 +5,8 @@ local lLogP = "MLP"
 lConnectId = "Unset"
 x,y = 1,1
 term.setCursorPos(x,y)
- 
+term.blit("RC version : 0.0.1", "000000000000011111" , "ffffffffffffffffff")
+term.setCursorPos(x, y+2)
 local function split(inputstr, sep)
     if sep == nil then
         sep = "%s"
