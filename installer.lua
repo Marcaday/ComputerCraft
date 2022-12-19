@@ -20,6 +20,10 @@ else if params[1] == "door" then
 else if params[1] == "log_tracker" then
 	shell.run("rm log_tracker.lua")
 	shell.run("wget https://github.com/Marcaday/ComputerCraft/raw/main/log_tracker.lua log_tracker.lua")
+else if params[1] == "reactor_menu" then
+	shell.run("rm reactor_menu.lua")
+	shell.run("wget https://github.com/Marcaday/ComputerCraft/raw/main/reactor_menu.lua reactor_menu.lua")
+end
 end
 end
 end

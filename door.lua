@@ -11,7 +11,7 @@ function door(arg, senderID)
 	local lErrorP = "MerrorP"
 	local lLogP = "MLP"
 	local lFarmControlSide = "up"
-	if arg == "open" or arg == "Open" then
+	if arg == "open" or arg == "Open" then --replace by a tolower fun
 		redstone.setOutput(lFarmControlSide, false)
 		rednet.broadcast(lId.." - Maintenance doors are now "..arg, lLogP)
 	elseif arg == "close" or arg == "Close" then

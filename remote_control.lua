@@ -17,12 +17,11 @@ local function split(inputstr, sep)
     end
     return (t)
 end
- 
+ local connected_ids = {}
 while true do
     input = read()
     tInput = split(input, " ")
-	local connected_ids = {}
-    if input == "ls" and lConnectId == "Unset" then
+    if tInput[1] == "ls" and lConnectId == "Unset" then
     	connected_ids = {rednet.lookup(lProtocol)}
     	for i=1, #connected_ids do
 			rednet.broadcast(lId.." - Asking identity to "..connected_ids[i], lLogP)
@@ -47,12 +46,12 @@ while true do
 		end
 		term.setCursorPos(x,y+2)
 		y = y+2
-    elseif  input == "exit" and lConnectId ~= "Unset" then
+    elseif  tInput == "exit" and lConnectId ~= "Unset" then
         lConnectId = "Unset"
         term.write("Exiting "..tostring(lConnectId))
 		term.setCursorPos(x,y+2)
 		y = y+2
-	elseif input == "logs" and lConnectId == "Unset" then
+	elseif tInput == "logs" and lConnectId == "Unset" then
 		while true do 
 			local event, key = os.pullEvent("key")
 			senderID, message = rednet.receive(lLogP)
