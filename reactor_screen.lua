@@ -58,6 +58,9 @@ function update_display()
 	while true do
 		rStatus = reactor.getStatus()
 		rTemperature = reactor.getTemperature()-273.15
+		if rTemperature >= 400 and rStatus then
+			reactor.scram()
+		end
 		drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 		drawButtonWindow(wButtonWindow, rStatus)
 	end
@@ -65,11 +68,8 @@ end
 
 function get_events()
 	while true do
-		local event, button, cx, cy = os.pullEvent()
+		local event, button, cx, cy = os.pullEvent("monitor_touch")
 		rStatus = reactor.getStatus()
-		if event == "monitor_touch" then 
-			check_button(cx, cy)
-		end
 	end
 end
 
