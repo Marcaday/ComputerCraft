@@ -36,7 +36,7 @@ function drawButtonWindow(wButtonWindow, rStatus)
 end
 
 function check_button(x,y)
-	if y >= cButtonUpleftCornery and y <= cButtonDownrightCornery and x>= cButtonUpleftCornerx and x<= cButtonDownrightCornerx then
+	if y >= cButtonUpleftCornery and y <= cButtonDownrightCornery and x<= cButtonDownrightCornerx and x>= cButtonUpleftCornerx then
 		if rStatus then
 			reactor.scram()
 		else
