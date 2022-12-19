@@ -34,8 +34,8 @@ function drawButtonWindow(wButtonWindow, rStatus)
 	end
 end
 
-function check_button(x,y,mWidth, mHeight, rStatus)
-	if y >= 6 and y <= mHeight then
+function check_button(x,y,)
+	if y >= 6 and y <= 8 and x>=1 and x<=4 then
 		if rStatus then
 			reactor.scram()
 		else
