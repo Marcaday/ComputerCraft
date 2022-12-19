@@ -9,7 +9,8 @@ term.clear()
 
 local rStatus
 local rTemperature 
-
+local cButtonUpleftCornerx, cButtonUpleftCornery = 1, 6
+local cButtonDownrightCornerx, cButtonDownrightCornery = 4, 9
 function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 	x, y= 1, 1
 	wStatusWindow.setCursorPos(x,y)
@@ -24,18 +25,18 @@ function drawButtonWindow(wButtonWindow, rStatus)
 	if rStatus then
 		wButtonWindow.setBackgroundColor(colors.lime)
 		wButtonWindow.clear()
-		wButtonWindow.setCursorPos(1, 7)
+		wButtonWindow.setCursorPos(cButtonUpleftCornerx, cButtonUpleftCornery)
 		wButtonWindow.write("ON")
 	else
 		wButtonWindow.setBackgroundColor(colors.red)
 		wButtonWindow.clear()
-		wButtonWindow.setCursorPos(1, 7)
+		wButtonWindow.setCursorPos(cButtonUpleftCornerx, cButtonUpleftCornery)
 		wButtonWindow.write("OFF")
 	end
 end
 
-function check_button(x,y,)
-	if y >= 6 and y <= 8 and x>=1 and x<=4 then
+function check_button(x,y)
+	if y >= cButtonUpleftCornery and y <= cButtonDownrightCornery and x>= cButtonUpleftCornerx and x<= cButtonDownrightCornerx then
 		if rStatus then
 			reactor.scram()
 		else
@@ -45,7 +46,7 @@ function check_button(x,y,)
 
 end
 wStatusWindow = window.create(term.current(), 1, 1,  mWidth, 6)
-wButtonWindow = window.create(term.current(), 1, 7,  8, 4)
+wButtonWindow = window.create(term.current(), cButtonUpleftCornerx, cButtonUpleftCornery,  cButtonDownrightCornerx, cButtonDownrightCornery)
 while true do
 	rStatus = reactor.getStatus()
 	rTemperature = reactor.getTemperature()-273.15
