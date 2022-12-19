@@ -9,6 +9,7 @@ term.clear()
 
 local rStatus
 local rTemperature 
+
 function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 	x, y= 1, 1
 	wStatusWindow.setCursorPos(x,y)
@@ -23,10 +24,12 @@ function drawButtonWindow(wButtonWindow, rStatus)
 	if rStatus then
 		wButtonWindow.setBackgroundColor(colors.lime)
 		wButtonWindow.clear()
+		wButtonWindow.setCursorPos(1, 7)
 		wButtonWindow.write("ON")
 	else
 		wButtonWindow.setBackgroundColor(colors.red)
 		wButtonWindow.clear()
+		wButtonWindow.setCursorPos(1, 7)
 		wButtonWindow.write("OFF")
 	end
 end
@@ -48,6 +51,10 @@ while true do
 	rTemperature = reactor.getTemperature()-273.15
 	drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 	drawButtonWindow(wButtonWindow, rStatus)
-	local event, button, cx, cy = os.pullEvent("monitor_touch") 
-	check_button(cx, cy, mWidth, mHeight, rStatus)
+	
+	local event, button, cx, cy = os.pullEvent()
+	rStatus = reactor.getStatus()
+	if event == "monitor_touch" then 
+		check_button(cx, cy, mWidth, mHeight, rStatus)
+	end
 end
