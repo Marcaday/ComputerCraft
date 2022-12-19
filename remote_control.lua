@@ -56,7 +56,7 @@ while true do
 			local event, key = os.pullEvent("key")
 			senderID, message = rednet.receive(lLogP)
 			term.write(message)
-			term.setCursorPos(x,y+2)
+			term.setCursorPos(x,y+2 )
 			y = y+2
 			if key == "q" then
 				break
