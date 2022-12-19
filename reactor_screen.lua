@@ -1,34 +1,47 @@
 native= term.current()
 reactor = peripheral.wrap("fissionReactorLogicAdapter_2")
-monitor = peripheral.wrap("back")
-
-monitor.setTextScale(2.5)
+monitor = peripheral.find("monitor")
+monitor.setTextScale(2)
 term.redirect(monitor)
+mWidth, mHeight = term.getSize()
 term.setBackgroundColor(colors.gray)
 term.clear()
-choice1 = "On"
-choice2 = "Off"
-while true do
-	x,y = 1,1
-	term.setCursorPos(x,y)
-	term.clearLine()
-	local rStatus = reactor.getStatus()
-	local rTemperature = reactor.getTemperature()-273.15
-	term.write("Reactor is "..tostring(rStatus))
-	term.setCursorPos(x, y+3)
-	term.write("Temperature : "..string.format("%.2f", rTemperature).."°C")
-	term.setCursorPos(1, 7)
-	write(choice1)
- 
-	term.setCursorPos(1, 10)
-	write(choice2)
-	local event, button, cx, cy = os.pullEvent()
- 
-	if event == "monitor_touch" then 
-    	if cy == 7 and rStatus == false then
-        	reactor.activate()
-    	elseif cy == 10 and rStatus == true then
-        	reactor.scram()
-    	end
+
+local rStatus
+local rTemperature
+
+function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
+	x, y= 1, 1
+	wStatusWindow.setBackgroundColor(colors.gray)
+	wStatusWindow.clear()
+	wStatusWindow.write("Reactor is "..tostring(rStatus))
+	wStatusWindow.setCursorPos(x, y+2)
+	wStatusWindow.write("Temperature: "..string.format("%.2f", rTemperature).."°C")
+end
+
+function drawButtonWindow(wButtonWindow, rStatus)
+	if rStatus then
+		wButtonWindow.setBackgroundColor(colors.lime)
+		wButtonWindow.clear()
+		wButtonWindow.write("ON")
+	else
+		wButtonWindow.setBackgroundColor(colors.red)
+		wButtonWindow.clear()
+		wButtonWindow.write("OFF")
 	end
+end
+
+wStatusWindow = window.create(term.current(), 1, 1,  mWidth, 6)
+wButtonWindow = window.create(term.current(), 1, 7,  8, 4)
+while true do
+	rStatus = reactor.getStatus()
+	rTemperature = reactor.getTemperature()-273.15
+	drawStatusWindow(wStatusWindow, rStatus, rTemperature)
+	drawButtonWindow(wButtonWindow, rStatus)
+	local event, button, cx, cy = os.pullEvent("monitor_touch") 
+    if cy == 7 and rStatus == false then
+        reactor.activate()
+    elseif cy == 10 and rStatus == true then
+        reactor.scram()
+    end
 end
