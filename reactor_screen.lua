@@ -11,6 +11,10 @@ local rStatus
 local rTemperature 
 local cButtonStartx, cButtonStarty = 1, 6
 local cButtonSizex, cButtonSizey = 4, 9
+
+wStatusWindow = window.create(term.current(), 1, 1,  mWidth, 6)
+wButtonWindow = window.create(term.current(), cButtonStartx, cButtonStarty,  cButtonSizex, cButtonSizey)
+
 function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 	x, y= 1, 1
 	wStatusWindow.setCursorPos(x,y)
@@ -49,17 +53,24 @@ function check_button(x,y)
 	end
 
 end
-wStatusWindow = window.create(term.current(), 1, 1,  mWidth, 6)
-wButtonWindow = window.create(term.current(), cButtonStartx, cButtonStarty,  cButtonSizex, cButtonSizey)
-while true do
-	rStatus = reactor.getStatus()
-	rTemperature = reactor.getTemperature()-273.15
-	drawStatusWindow(wStatusWindow, rStatus, rTemperature)
-	drawButtonWindow(wButtonWindow, rStatus)
-	
-	local event, button, cx, cy = os.pullEvent()
-	rStatus = reactor.getStatus()
-	if event == "monitor_touch" then 
-		check_button(cx, cy)
+
+function update_display()
+	while true do
+		rStatus = reactor.getStatus()
+		rTemperature = reactor.getTemperature()-273.15
+		drawStatusWindow(wStatusWindow, rStatus, rTemperature)
+		drawButtonWindow(wButtonWindow, rStatus)
 	end
 end
+
+function get_events()
+	while true do
+		local event, button, cx, cy = os.pullEvent()
+		rStatus = reactor.getStatus()
+		if event == "monitor_touch" then 
+			check_button(cx, cy)
+		end
+	end
+end
+
+parallel.waitForAny(get_events, update_display)
