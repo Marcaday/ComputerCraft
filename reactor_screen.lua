@@ -25,12 +25,12 @@ function drawButtonWindow(wButtonWindow, rStatus)
 	if rStatus then
 		wButtonWindow.setBackgroundColor(colors.lime)
 		wButtonWindow.clear()
-		wButtonWindow.setCursorPos(cButtonStartx, cButtonStarty)
+		wButtonWindow.setCursorPos(cButtonSizex/2, cButtonSizey/2)
 		wButtonWindow.write("ON")
 	else
 		wButtonWindow.setBackgroundColor(colors.red)
 		wButtonWindow.clear()
-		wButtonWindow.setCursorPos(cButtonStartx, cButtonStarty)
+		wButtonWindow.setCursorPos(cButtonSizex/2, cButtonSizey/2)
 		wButtonWindow.write("OFF")
 	end
 end
@@ -39,7 +39,7 @@ function check_button(x,y)
 	if y >= cButtonStarty 
 	and y <= cButtonStarty + cButtonSizey
 	and x >=  cButtonStartx
-	and x >= cButtonStartx + cButtonSizex 
+	and x <= cButtonStartx + cButtonSizex 
 	then
 		if rStatus then
 			reactor.scram()
