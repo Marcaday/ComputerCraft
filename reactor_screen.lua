@@ -7,6 +7,7 @@ mWidth, mHeight = term.getSize()
 term.setBackgroundColor(colors.gray)
 term.clear()
 
+local rMaxTemp = 300
 local rStatus
 local rTemperature 
 local cButtonStartx, cButtonStarty = 1, 6
@@ -14,6 +15,7 @@ local cButtonSizex, cButtonSizey = 4, 9
 
 wStatusWindow = window.create(term.current(), 1, 1,  mWidth, 6)
 wButtonWindow = window.create(term.current(), cButtonStartx, cButtonStarty,  cButtonSizex, cButtonSizey)
+wBurnRateWindow = window.create(term.current(), cButtonStartx, cButtonStarty+cButtonSizey+1, cButtonSizex, 2)
 
 function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 	wStatusWindow.setBackgroundColor(colors.gray)
@@ -34,57 +36,46 @@ function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 	-- Display the current temperature of the reactor
 	wStatusWindow.setCursorPos(1, 3)
 	wStatusWindow.write("Temperature: ")
-	if rTemperature >= 400 then
+	if rTemperature >= rMaxTemp then
 		wStatusWindow.setTextColor(colors.red)
 	else
 		wStatusWindow.setTextColor(colors.lime)
 	end
 	wStatusWindow.write(string.format("%.2f", rTemperature).."°C")
 	wStatusWindow.setTextColor(colors.white)
+
+	wStatusWindow.setCursorPos(1, 5)
+	wStatusWindow.write("Burn Rate: ")
+	wStatusWindow.write(string.format("%.2f", rBurnRate))
 end
 
--- Function to draw the on/off button
 function drawButtonWindow(wButtonWindow, rStatus)
-	wButtonWindow.clear()
-
-	-- Draw the button outline
-	wButtonWindow.setBackgroundColor(colors.gray)
-	wButtonWindow.setCursorPos(1, 1)
-	wButtonWindow.write(" ")
-	for i = 1, cButtonSizex-2 do
-		wButtonWindow.write("-")
-	end
-	wButtonWindow.write(" ")
-	for i = 2, cButtonSizey-1 do
-		wButtonWindow.setCursorPos(1, i)
-		wButtonWindow.write("|")
-		wButtonWindow.setCursorPos(cButtonSizex, i)
-		wButtonWindow.write("|")
-	end
-	wButtonWindow.setCursorPos(1, cButtonSizey)
-	wButtonWindow.write(" ")
-	for i = 1, cButtonSizex-2 do
-		wButtonWindow.write("-")
-	end
-	wButtonWindow.write(" ")
-
-	-- Fill the button with the appropriate color and display the label
 	if rStatus then
 		wButtonWindow.setBackgroundColor(colors.lime)
-		wButtonWindow.setCursorPos(cButtonSizex/2-1, cButtonSizey/2)
-		wButtonWindow.write(" ON ")
+		wButtonWindow.clear()
+		wButtonWindow.setCursorPos(cButtonSizex/2, cButtonSizey/2)
+		wButtonWindow.write("ON")
 	else
 		wButtonWindow.setBackgroundColor(colors.red)
-		wButtonWindow.setCursorPos(cButtonSizex/2-1, cButtonSizey/2)
-		wButtonWindow.write(" OFF ")
+		wButtonWindow.clear()
+		wButtonWindow.setCursorPos(cButtonSizex/2, cButtonSizey/2)
+		wButtonWindow.write("OFF")
 	end
 end
 
+function drawBurnRateWindow(wButtonWindow)
+	-- Display the buttons for increasing and decreasing the burn rate
+	wButtonWindow.setBackgroundColor(colors.lightGray)
+	wButtonWindow.clear()
+	wButtonWindow.setCursorPos(1, 1)
+	wButtonWindow.write("<")
+	wButtonWindow.setCursorPos(cButtonSizex-1, 1)
+	wButtonWindow.write(">")
+end
 
+function check_button(x, y)
 
-
-
-function check_button(x,y)
+	-- Check if the Toggling button is pressed 
 	if y >= cButtonStarty 
 	and y <= cButtonStarty + cButtonSizey
 	and x >=  cButtonStartx
@@ -95,7 +86,21 @@ function check_button(x,y)
 		else
 			reactor.activate()
 		end
+	
+	-- Check if the burn rate increase button is pressed
+	elseif y == cButtonStarty+1
+	and x == cButtonStartx
+	then
+		reactor.setBurnRate(reactor.getBurnRate()+0.1)
+	
+	-- Check if the burn rate decrease button is pressed
+	elseif y == cButtonStarty+1
+	and x == cButtonStartx+cButtonSizex-1
+	then
+		reactor.setBurnRate(reactor.getBurnRate()-0.1)
 	end
+
+end
 
 end
 
@@ -103,18 +108,20 @@ function update_display()
 	while true do
 		rStatus = reactor.getStatus()
 		rTemperature = reactor.getTemperature()-273.15
+		rBurnRate = reactor.getBurnRate()
 		if rTemperature >= 300 and rStatus then
 			reactor.scram()
 		end
 		drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 		drawButtonWindow(wButtonWindow, rStatus)
+		drawBurnRateWindow(wBurnRateWindow)
 	end
 end
 
 function get_events()
 	while true do
-		local event, button, cx, cy = os.pullEvent("monitor_touch")
-		check_button(cx, cy)
+		local event, button, x, y = os.pullEvent("monitor_touch")
+		check_button(x,y)
 	end
 end
 
