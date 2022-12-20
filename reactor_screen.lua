@@ -42,20 +42,46 @@ function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 	wStatusWindow.write(string.format("%.2f", rTemperature).."°C")
 	wStatusWindow.setTextColor(colors.white)
 end
-
+-- Function to draw the on/off button
 function drawButtonWindow(wButtonWindow, rStatus)
+	wButtonWindow.clear()
+
+	-- Draw the button outline
+	wButtonWindow.setBackgroundColor(colors.gray)
+	wButtonWindow.setCursorPos(1, 1)
+	wButtonWindow.write(" ")
+	for i = 1, cButtonSizex-2 do
+		wButtonWindow.write("-")
+	end
+	wButtonWindow.write(" ")
+	for i = 2, cButtonSizey-1 do
+		wButtonWindow.setCursorPos(1, i)
+		wButtonWindow.write("|")
+		wButtonWindow.setCursorPos(cButtonSizex, i)
+		wButtonWindow.write("|")
+	end
+	wButtonWindow.setCursorPos(1, cButtonSizey)
+	wButtonWindow.write(" ")
+	for i = 1, cButtonSizex-2 do
+		wButtonWindow.write("-")
+	end
+	wButtonWindow.write(" ")
+
+	-- Fill the button with the appropriate color and display the label
 	if rStatus then
 		wButtonWindow.setBackgroundColor(colors.lime)
-		wButtonWindow.clear()
-		wButtonWindow.setCursorPos(cButtonSizex/2, cButtonSizey/2)
-		wButtonWindow.write("ON")
+		wButtonWindow.setCursorPos(cButtonSizex/2-1, cButtonSizey/2)
+		wButtonWindow.write(" ON ")
 	else
 		wButtonWindow.setBackgroundColor(colors.red)
-		wButtonWindow.clear()
-		wButtonWindow.setCursorPos(cButtonSizex/2, cButtonSizey/2)
-		wButtonWindow.write("OFF")
+		wButtonWindow.setCursorPos(cButtonSizex/2-1, cButtonSizey/2)
+		wButtonWindow.write(" OFF ")
 	end
 end
+
+
+
+
 
 function check_button(x,y)
 	if y >= cButtonStarty 
