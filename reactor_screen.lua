@@ -12,6 +12,11 @@ local rStatus
 local rTemperature 
 local cButtonStartx, cButtonStarty = 1, 6
 local cButtonSizex, cButtonSizey = 4, 9
+local xPos, yPos = window.getPosition(wBurnRateWindow)
+local buttonX1 = xPos + 1
+local buttonX2 = xPos + cButtonSizex - 1
+local buttonY = yPos + 1
+
 
 wStatusWindow = window.create(term.current(), 1, 1,  mWidth, 6)
 wButtonWindow = window.create(term.current(), cButtonStartx, cButtonStarty,  cButtonSizex, cButtonSizey)
@@ -87,22 +92,21 @@ function check_button(x, y)
 			reactor.activate()
 		end
 	
-	-- Check if the burn rate increase button is pressed
-	elseif y == cButtonStarty+1
-	and x == cButtonStartx
-	then
-		reactor.setBurnRate(reactor.getBurnRate()+0.1)
-	
-	-- Check if the burn rate decrease button is pressed
-	elseif y == cButtonStarty+1
-	and x == cButtonStartx+cButtonSizex-1
-	then
-		reactor.setBurnRate(reactor.getBurnRate()-0.1)
+		if y == buttonY
+		and x == buttonX1
+		then
+			reactor.setBurnRate(reactor.getBurnRate()+0.1)
+		
+		-- Check if the burn rate decrease button is pressed
+		elseif y == buttonY
+		and x == buttonX2
+		then
+			reactor.setBurnRate(reactor.getBurnRate()-0.1)
+		end
 	end
-
 end
 
-end
+
 
 function update_display()
 	while true do
