@@ -1,9 +1,13 @@
 native= term.current()
+nx, ny = 1, 1
 reactor = peripheral.wrap("fissionReactorLogicAdapter_2")
 monitor = peripheral.find("monitor")
 monitor.setTextScale(2)
 term.redirect(monitor)
 mWidth, mHeight = term.getSize()
+native.write("Width: "..tostring(mWidth).." mHeight: "..tostring(mHeight))
+native.setCursorPos(nx, ny+1)
+ny = ny + 1
 term.setBackgroundColor(colors.gray)
 term.clear()
 
@@ -130,6 +134,9 @@ end
 function get_events()
 	while true do
 		local event, button, x, y = os.pullEvent("monitor_touch")
+		native.write("monitor_touch on x:"..tostring(x).." y:"..tostring(y))
+		native.setCursorPos(nx, ny+1)
+		ny = ny +1
 		check_button(x,y)
 	end
 end
