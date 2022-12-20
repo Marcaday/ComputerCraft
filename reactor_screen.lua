@@ -42,6 +42,7 @@ function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
 	wStatusWindow.write(string.format("%.2f", rTemperature).."°C")
 	wStatusWindow.setTextColor(colors.white)
 end
+
 -- Function to draw the on/off button
 function drawButtonWindow(wButtonWindow, rStatus)
 	wButtonWindow.clear()
