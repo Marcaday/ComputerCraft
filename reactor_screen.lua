@@ -99,7 +99,7 @@ function check_button(x, y)
 	and x <= cButtonStartx + (cButtonSizex/2)
 	then
 		-- Increase the burn rate by 0.1
-		rBurnRate = rBurnRate - 0.1
+		reactor.setBurnRate(rBurnRate - 0.1)
 	
 	-- Check if the burn rate increase button is pressed
 	elseif y >= cButtonStarty+cButtonSizey+1
@@ -108,12 +108,11 @@ function check_button(x, y)
 	and x <= cButtonStartx + cButtonSizex
 	then
 	-- Increase the burn rate by 0.1
-	rBurnRate = rBurnRate + 0.1
+		reactor.setBurnRate(rBurnRate + 0.1)
 	-- Boundary check for the burn rate
 	if rBurnRate < 0 then
-		rBurnRate = 0
+		reactor.setBurnRate(0)
 	end
-	reactor.setBurnRate(rBurnRate)
 	end
 end
 
