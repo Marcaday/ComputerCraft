@@ -16,13 +16,31 @@ wStatusWindow = window.create(term.current(), 1, 1,  mWidth, 6)
 wButtonWindow = window.create(term.current(), cButtonStartx, cButtonStarty,  cButtonSizex, cButtonSizey)
 
 function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
-	x, y= 1, 1
-	wStatusWindow.setCursorPos(x,y)
 	wStatusWindow.setBackgroundColor(colors.gray)
 	wStatusWindow.clear()
-	wStatusWindow.write("Reactor is "..tostring(rStatus))
-	wStatusWindow.setCursorPos(x, y+2)
-	wStatusWindow.write("Temperature: "..string.format("%.2f", rTemperature).."°C")
+
+	-- Display the current status of the reactor
+	wStatusWindow.setCursorPos(1, 1)
+	wStatusWindow.write("Reactor Status: ")
+	if rStatus then
+		wStatusWindow.setTextColor(colors.lime)
+		wStatusWindow.write("ON")
+	else
+		wStatusWindow.setTextColor(colors.red)
+		wStatusWindow.write("OFF")
+	end
+	wStatusWindow.setTextColor(colors.white)
+	
+	-- Display the current temperature of the reactor
+	wStatusWindow.setCursorPos(1, 3)
+	wStatusWindow.write("Temperature: ")
+	if rTemperature >= 400 then
+		wStatusWindow.setTextColor(colors.red)
+	else
+		wStatusWindow.setTextColor(colors.lime)
+	end
+	wStatusWindow.write(string.format("%.2f", rTemperature).."°C")
+	wStatusWindow.setTextColor(colors.white)
 end
 
 function drawButtonWindow(wButtonWindow, rStatus)
@@ -58,7 +76,7 @@ function update_display()
 	while true do
 		rStatus = reactor.getStatus()
 		rTemperature = reactor.getTemperature()-273.15
-		if rTemperature >= 400 and rStatus then
+		if rTemperature >= 300 and rStatus then
 			reactor.scram()
 		end
 		drawStatusWindow(wStatusWindow, rStatus, rTemperature)
