@@ -12,14 +12,16 @@ local rStatus
 local rTemperature 
 local cButtonStartx, cButtonStarty = 1, 6
 local cButtonSizex, cButtonSizey = 4, 9
-local xPos, yPos = window.getPosition(wBurnRateWindow)
-local buttonX1 = xPos + 1
-local buttonX2 = xPos + cButtonSizex - 1
-local buttonY = yPos + 1
+
 
 
 wStatusWindow = window.create(term.current(), 1, 1,  mWidth, 6)
 wButtonWindow = window.create(term.current(), cButtonStartx, cButtonStarty,  cButtonSizex, cButtonSizey)
+
+local xPos, yPos = window.getPosition(wBurnRateWindow)
+local buttonX1 = xPos + 1
+local buttonX2 = xPos + cButtonSizex - 1
+local buttonY = yPos + 1
 wBurnRateWindow = window.create(term.current(), cButtonStartx, cButtonStarty+cButtonSizey+1, cButtonSizex, 2)
 
 function drawStatusWindow(wStatusWindow, rStatus, rTemperature)
