@@ -113,7 +113,7 @@ end
 function get_events()
 	while true do
 		local event, button, cx, cy = os.pullEvent("monitor_touch")
-		rStatus = reactor.getStatus()
+		check_button(cx, cy)
 	end
 end
 
