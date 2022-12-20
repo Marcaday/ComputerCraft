@@ -96,7 +96,7 @@ function check_button(x, y)
 	elseif y >= cButtonStarty+cButtonSizey+1
 	and y <=  cButtonStarty+cButtonSizey+1+cButtonSizey
 	and x >= cButtonStartx
-	and x <= cButtonStartx + (cButtonSizex/2) + 1
+	and x <= cButtonStartx + (cButtonSizex/2) - 1
 	then
 		-- Increase the burn rate by 0.1
 		reactor.setBurnRate(rBurnRate - 0.1)
