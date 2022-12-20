@@ -5,6 +5,7 @@ monitor = peripheral.find("monitor")
 monitor.setTextScale(2)
 term.redirect(monitor)
 mWidth, mHeight = term.getSize()
+native.clear()
 native.write("Width: "..tostring(mWidth).." mHeight: "..tostring(mHeight))
 native.setCursorPos(nx, ny+1)
 ny = ny + 1
@@ -112,6 +113,7 @@ function check_button(x, y)
 	if rBurnRate < 0 then
 		rBurnRate = 0
 	end
+	reactor.setBurnRate(rBurnRate)
 	end
 end
 
